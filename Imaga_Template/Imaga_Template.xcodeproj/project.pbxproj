@@ -26,6 +26,7 @@
 		A2A9830C20CA883B00C8413F /* 260.png in Resources */ = {isa = PBXBuildFile; fileRef = A2A9830A20CA883B00C8413F /* 260.png */; };
 		A2A9830D20CA883B00C8413F /* 20008.png in Resources */ = {isa = PBXBuildFile; fileRef = A2A9830B20CA883B00C8413F /* 20008.png */; };
 		A2A9831020CA8B2200C8413F /* TYPublicMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9830F20CA8B2200C8413F /* TYPublicMethods.m */; };
+		A2A9831320CA8F0200C8413F /* TYImageProcessing.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9831220CA8F0200C8413F /* TYImageProcessing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,8 @@
 		A2A9830B20CA883B00C8413F /* 20008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 20008.png; sourceTree = "<group>"; };
 		A2A9830E20CA8B2200C8413F /* TYPublicMethods.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TYPublicMethods.h; sourceTree = "<group>"; };
 		A2A9830F20CA8B2200C8413F /* TYPublicMethods.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TYPublicMethods.m; sourceTree = "<group>"; };
+		A2A9831120CA8F0200C8413F /* TYImageProcessing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TYImageProcessing.h; sourceTree = "<group>"; };
+		A2A9831220CA8F0200C8413F /* TYImageProcessing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TYImageProcessing.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 				A2A9830820CA862100C8413F /* TYImageProcessingViewController.m */,
 				A2A9830E20CA8B2200C8413F /* TYPublicMethods.h */,
 				A2A9830F20CA8B2200C8413F /* TYPublicMethods.m */,
+				A2A9831120CA8F0200C8413F /* TYImageProcessing.h */,
+				A2A9831220CA8F0200C8413F /* TYImageProcessing.m */,
 				89987CB320C0318C004D67A5 /* Assets.xcassets */,
 				A2A9830A20CA883B00C8413F /* 260.png */,
 				A2A9830B20CA883B00C8413F /* 20008.png */,
@@ -235,6 +240,7 @@
 				A2A9830420CA85CB00C8413F /* EXTSelectorChecking.m in Sources */,
 				A2A9830020CA85CB00C8413F /* EXTNil.m in Sources */,
 				89987CBA20C0318C004D67A5 /* main.m in Sources */,
+				A2A9831320CA8F0200C8413F /* TYImageProcessing.m in Sources */,
 				A2A9830520CA85CB00C8413F /* NSInvocation+EXT.m in Sources */,
 				A2A9830220CA85CB00C8413F /* EXTSafeCategory.m in Sources */,
 				A2A9830120CA85CB00C8413F /* EXTRuntimeExtensions.m in Sources */,
