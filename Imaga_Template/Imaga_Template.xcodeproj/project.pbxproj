@@ -13,6 +13,19 @@
 		89987CB420C0318C004D67A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89987CB320C0318C004D67A5 /* Assets.xcassets */; };
 		89987CB720C0318C004D67A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89987CB520C0318C004D67A5 /* LaunchScreen.storyboard */; };
 		89987CBA20C0318C004D67A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89987CB920C0318C004D67A5 /* main.m */; };
+		A2A982FE20CA85CB00C8413F /* EXTADT.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982E720CA85CB00C8413F /* EXTADT.m */; };
+		A2A982FF20CA85CB00C8413F /* EXTConcreteProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982E920CA85CB00C8413F /* EXTConcreteProtocol.m */; };
+		A2A9830020CA85CB00C8413F /* EXTNil.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982ED20CA85CB00C8413F /* EXTNil.m */; };
+		A2A9830120CA85CB00C8413F /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982F120CA85CB00C8413F /* EXTRuntimeExtensions.m */; };
+		A2A9830220CA85CB00C8413F /* EXTSafeCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982F320CA85CB00C8413F /* EXTSafeCategory.m */; };
+		A2A9830320CA85CB00C8413F /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982F520CA85CB00C8413F /* EXTScope.m */; };
+		A2A9830420CA85CB00C8413F /* EXTSelectorChecking.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982F720CA85CB00C8413F /* EXTSelectorChecking.m */; };
+		A2A9830520CA85CB00C8413F /* NSInvocation+EXT.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982FB20CA85CB00C8413F /* NSInvocation+EXT.m */; };
+		A2A9830620CA85CB00C8413F /* NSMethodSignature+EXT.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982FD20CA85CB00C8413F /* NSMethodSignature+EXT.m */; };
+		A2A9830920CA862100C8413F /* TYImageProcessingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9830820CA862100C8413F /* TYImageProcessingViewController.m */; };
+		A2A9830C20CA883B00C8413F /* 260.png in Resources */ = {isa = PBXBuildFile; fileRef = A2A9830A20CA883B00C8413F /* 260.png */; };
+		A2A9830D20CA883B00C8413F /* 20008.png in Resources */ = {isa = PBXBuildFile; fileRef = A2A9830B20CA883B00C8413F /* 20008.png */; };
+		A2A9831020CA8B2200C8413F /* TYPublicMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A9830F20CA8B2200C8413F /* TYPublicMethods.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +39,36 @@
 		89987CB620C0318C004D67A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89987CB820C0318C004D67A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89987CB920C0318C004D67A5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A2A982E620CA85CB00C8413F /* EXTADT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTADT.h; sourceTree = "<group>"; };
+		A2A982E720CA85CB00C8413F /* EXTADT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTADT.m; sourceTree = "<group>"; };
+		A2A982E820CA85CB00C8413F /* EXTConcreteProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTConcreteProtocol.h; sourceTree = "<group>"; };
+		A2A982E920CA85CB00C8413F /* EXTConcreteProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTConcreteProtocol.m; sourceTree = "<group>"; };
+		A2A982EA20CA85CB00C8413F /* EXTCoroutine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTCoroutine.h; sourceTree = "<group>"; };
+		A2A982EB20CA85CB00C8413F /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTKeyPathCoding.h; sourceTree = "<group>"; };
+		A2A982EC20CA85CB00C8413F /* EXTNil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTNil.h; sourceTree = "<group>"; };
+		A2A982ED20CA85CB00C8413F /* EXTNil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTNil.m; sourceTree = "<group>"; };
+		A2A982EE20CA85CB00C8413F /* extobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extobjc.h; sourceTree = "<group>"; };
+		A2A982EF20CA85CB00C8413F /* extobjc_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extobjc_Prefix.pch; sourceTree = "<group>"; };
+		A2A982F020CA85CB00C8413F /* EXTRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTRuntimeExtensions.h; sourceTree = "<group>"; };
+		A2A982F120CA85CB00C8413F /* EXTRuntimeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTRuntimeExtensions.m; sourceTree = "<group>"; };
+		A2A982F220CA85CB00C8413F /* EXTSafeCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTSafeCategory.h; sourceTree = "<group>"; };
+		A2A982F320CA85CB00C8413F /* EXTSafeCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTSafeCategory.m; sourceTree = "<group>"; };
+		A2A982F420CA85CB00C8413F /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
+		A2A982F520CA85CB00C8413F /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
+		A2A982F620CA85CB00C8413F /* EXTSelectorChecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTSelectorChecking.h; sourceTree = "<group>"; };
+		A2A982F720CA85CB00C8413F /* EXTSelectorChecking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTSelectorChecking.m; sourceTree = "<group>"; };
+		A2A982F820CA85CB00C8413F /* EXTSynthesize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTSynthesize.h; sourceTree = "<group>"; };
+		A2A982F920CA85CB00C8413F /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
+		A2A982FA20CA85CB00C8413F /* NSInvocation+EXT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+EXT.h"; sourceTree = "<group>"; };
+		A2A982FB20CA85CB00C8413F /* NSInvocation+EXT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+EXT.m"; sourceTree = "<group>"; };
+		A2A982FC20CA85CB00C8413F /* NSMethodSignature+EXT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMethodSignature+EXT.h"; sourceTree = "<group>"; };
+		A2A982FD20CA85CB00C8413F /* NSMethodSignature+EXT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMethodSignature+EXT.m"; sourceTree = "<group>"; };
+		A2A9830720CA862100C8413F /* TYImageProcessingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TYImageProcessingViewController.h; sourceTree = "<group>"; };
+		A2A9830820CA862100C8413F /* TYImageProcessingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TYImageProcessingViewController.m; sourceTree = "<group>"; };
+		A2A9830A20CA883B00C8413F /* 260.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 260.png; sourceTree = "<group>"; };
+		A2A9830B20CA883B00C8413F /* 20008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 20008.png; sourceTree = "<group>"; };
+		A2A9830E20CA8B2200C8413F /* TYPublicMethods.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TYPublicMethods.h; sourceTree = "<group>"; };
+		A2A9830F20CA8B2200C8413F /* TYPublicMethods.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TYPublicMethods.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,17 +101,55 @@
 		89987CA620C0318C004D67A5 /* Imaga_Template */ = {
 			isa = PBXGroup;
 			children = (
+				A2A982E520CA85CB00C8413F /* extobjc */,
 				89987CA720C0318C004D67A5 /* AppDelegate.h */,
 				89987CA820C0318C004D67A5 /* AppDelegate.m */,
 				89987CAA20C0318C004D67A5 /* ViewController.h */,
 				89987CAB20C0318C004D67A5 /* ViewController.m */,
+				A2A9830720CA862100C8413F /* TYImageProcessingViewController.h */,
+				A2A9830820CA862100C8413F /* TYImageProcessingViewController.m */,
+				A2A9830E20CA8B2200C8413F /* TYPublicMethods.h */,
+				A2A9830F20CA8B2200C8413F /* TYPublicMethods.m */,
 				89987CB320C0318C004D67A5 /* Assets.xcassets */,
+				A2A9830A20CA883B00C8413F /* 260.png */,
+				A2A9830B20CA883B00C8413F /* 20008.png */,
 				89987CB520C0318C004D67A5 /* LaunchScreen.storyboard */,
 				89987CB820C0318C004D67A5 /* Info.plist */,
 				89987CB920C0318C004D67A5 /* main.m */,
 				89987CB020C0318C004D67A5 /* Imaga_Template.xcdatamodeld */,
 			);
 			path = Imaga_Template;
+			sourceTree = "<group>";
+		};
+		A2A982E520CA85CB00C8413F /* extobjc */ = {
+			isa = PBXGroup;
+			children = (
+				A2A982E620CA85CB00C8413F /* EXTADT.h */,
+				A2A982E720CA85CB00C8413F /* EXTADT.m */,
+				A2A982E820CA85CB00C8413F /* EXTConcreteProtocol.h */,
+				A2A982E920CA85CB00C8413F /* EXTConcreteProtocol.m */,
+				A2A982EA20CA85CB00C8413F /* EXTCoroutine.h */,
+				A2A982EB20CA85CB00C8413F /* EXTKeyPathCoding.h */,
+				A2A982EC20CA85CB00C8413F /* EXTNil.h */,
+				A2A982ED20CA85CB00C8413F /* EXTNil.m */,
+				A2A982EE20CA85CB00C8413F /* extobjc.h */,
+				A2A982EF20CA85CB00C8413F /* extobjc_Prefix.pch */,
+				A2A982F020CA85CB00C8413F /* EXTRuntimeExtensions.h */,
+				A2A982F120CA85CB00C8413F /* EXTRuntimeExtensions.m */,
+				A2A982F220CA85CB00C8413F /* EXTSafeCategory.h */,
+				A2A982F320CA85CB00C8413F /* EXTSafeCategory.m */,
+				A2A982F420CA85CB00C8413F /* EXTScope.h */,
+				A2A982F520CA85CB00C8413F /* EXTScope.m */,
+				A2A982F620CA85CB00C8413F /* EXTSelectorChecking.h */,
+				A2A982F720CA85CB00C8413F /* EXTSelectorChecking.m */,
+				A2A982F820CA85CB00C8413F /* EXTSynthesize.h */,
+				A2A982F920CA85CB00C8413F /* metamacros.h */,
+				A2A982FA20CA85CB00C8413F /* NSInvocation+EXT.h */,
+				A2A982FB20CA85CB00C8413F /* NSInvocation+EXT.m */,
+				A2A982FC20CA85CB00C8413F /* NSMethodSignature+EXT.h */,
+				A2A982FD20CA85CB00C8413F /* NSMethodSignature+EXT.m */,
+			);
+			path = extobjc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,7 +210,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2A9830C20CA883B00C8413F /* 260.png in Resources */,
 				89987CB720C0318C004D67A5 /* LaunchScreen.storyboard in Resources */,
+				A2A9830D20CA883B00C8413F /* 20008.png in Resources */,
 				89987CB420C0318C004D67A5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,9 +224,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2A9830620CA85CB00C8413F /* NSMethodSignature+EXT.m in Sources */,
+				A2A9830320CA85CB00C8413F /* EXTScope.m in Sources */,
+				A2A9831020CA8B2200C8413F /* TYPublicMethods.m in Sources */,
 				89987CAC20C0318C004D67A5 /* ViewController.m in Sources */,
+				A2A982FE20CA85CB00C8413F /* EXTADT.m in Sources */,
+				A2A9830920CA862100C8413F /* TYImageProcessingViewController.m in Sources */,
+				A2A982FF20CA85CB00C8413F /* EXTConcreteProtocol.m in Sources */,
 				89987CB220C0318C004D67A5 /* Imaga_Template.xcdatamodeld in Sources */,
+				A2A9830420CA85CB00C8413F /* EXTSelectorChecking.m in Sources */,
+				A2A9830020CA85CB00C8413F /* EXTNil.m in Sources */,
 				89987CBA20C0318C004D67A5 /* main.m in Sources */,
+				A2A9830520CA85CB00C8413F /* NSInvocation+EXT.m in Sources */,
+				A2A9830220CA85CB00C8413F /* EXTSafeCategory.m in Sources */,
+				A2A9830120CA85CB00C8413F /* EXTRuntimeExtensions.m in Sources */,
 				89987CA920C0318C004D67A5 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +366,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Imaga_Template/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Users-yitang-desktop-App-MyItem.Imaga-Template";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -285,6 +380,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Imaga_Template/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Users-yitang-desktop-App-MyItem.Imaga-Template";
 				PRODUCT_NAME = "$(TARGET_NAME)";
