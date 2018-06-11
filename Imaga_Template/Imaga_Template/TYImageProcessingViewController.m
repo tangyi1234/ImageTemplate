@@ -14,9 +14,10 @@
 
 #define w [UIScreen mainScreen].bounds.size.width
 #define h [UIScreen mainScreen].bounds.size.height
-@interface TYImageProcessingViewController ()
+@interface TYImageProcessingViewController ()<UIScrollViewDelegate>
 @property (nonatomic, weak) UIImageView *imageView1;
 @property (nonatomic, weak) UIImageView *imageView2;
+@property (nonatomic, weak) UIImageView *imageView3;
 @end
 
 @implementation TYImageProcessingViewController
@@ -29,27 +30,40 @@
 
 - (void)initView {
     
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
+    scrollView.delegate = self;
+    [self.view addSubview:scrollView];
+    
     UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
     but.frame = CGRectMake(10, 100, 100, 30);
     but.backgroundColor = [UIColor yellowColor];
     [but setTitle:@"处理图片" forState:UIControlStateNormal];
     [but addTarget:self action:@selector(selectorBut) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:but];
+    [scrollView addSubview:but];
     
     UIImageView *imageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 140, w, 300)];
     imageView1.backgroundColor = [UIColor redColor];
     imageView1.image = [TYPublicMethods addWithFilePathStr:@"260"];
-    [self.view addSubview:_imageView1 = imageView1];
+    [scrollView addSubview:_imageView1 = imageView1];
     
     UIImageView *imageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 450, w, 300)];
     imageView2.backgroundColor = [UIColor greenColor];
-    [self.view addSubview:_imageView2 = imageView2];
+    imageView2.image = [TYPublicMethods addWithFilePathStr:@"20008"];
+    [scrollView addSubview:_imageView2 = imageView2];
+    
+    UIImageView *imageView3 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 760, w, 300)];
+    imageView3.backgroundColor = [UIColor magentaColor];
+    [scrollView addSubview:_imageView3 = imageView3];
+    
+    scrollView.contentSize = CGSizeMake(w,1070);
 }
 
 - (void)selectorBut {
-    CGImageRef imageRef = [TYImageProcessing nonAlphaImageWithImage:_imageView1.image.CGImage];
+//    CGImageRef imageRef = [TYImageProcessing nonAlphaImageWithImage1:_imageView1.image.CGImage];
+//    CGImageRef imageRef = [TYImageProcessing fillWithColorImage:_imageView1.image.CGImage colorsRef:[UIColor redColor].CGColor];
+    CGImageRef imageRef = [TYImageProcessing imageWithSynthesis:_imageView1.image.CGImage bImage:_imageView2.image.CGImage point:CGPointMake(100, 300)];
     UIImage *image = [UIImage imageWithCGImage:imageRef];
-    _imageView2.image = image;
+    _imageView3.image = image;
 }
 
 
