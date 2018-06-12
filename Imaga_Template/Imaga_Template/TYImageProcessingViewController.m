@@ -61,7 +61,12 @@
 - (void)selectorBut {
 //    CGImageRef imageRef = [TYImageProcessing nonAlphaImageWithImage1:_imageView1.image.CGImage];
 //    CGImageRef imageRef = [TYImageProcessing fillWithColorImage:_imageView1.image.CGImage colorsRef:[UIColor redColor].CGColor];
-    CGImageRef imageRef = [TYImageProcessing imageWithSynthesis:_imageView1.image.CGImage bImage:_imageView2.image.CGImage point:CGPointMake(100, 300)];
+//    CGImageRef imageRef = [TYImageProcessing imageWithSynthesis:_imageView1.image.CGImage bImage:_imageView2.image.CGImage point:CGPointMake(100, 300)];
+//    CGImageRef imageRef = [TYImageProcessing zoomWithimage:_imageView1.image.CGImage size:CGSizeMake(200, 200)];
+//    CGImageRef imageRef = [TYImageProcessing shearWithimage:_imageView1.image.CGImage rect:CGRectMake(w - 100, 100, 500, 500)];
+//    CGImageRef imageRef = [TYImageProcessing mirrorWithImage:_imageView1.image.CGImage state:NO];
+//    CGImageRef imageRef = [TYImageProcessing rotatingWithImage:_imageView1.image.CGImage radians:90];
+    CGImageRef imageRef = [TYImageProcessing shear1WithImage:_imageView1.image.CGImage offset:CGVectorMake(509, 50) translation:1 slope:1 scale:10 horizontal:YES];
     UIImage *image = [UIImage imageWithCGImage:imageRef];
     _imageView3.image = image;
 }

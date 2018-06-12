@@ -180,6 +180,163 @@
     return outputImage;
 }
 
++ (CGImageRef)zoomWithimage:(CGImageRef)imageRef size:(CGSize)size {
+    __block vImage_Buffer a_buffer = {} ,output_buffer = {};
+    @onExit {
+        if (a_buffer.data) free(a_buffer.data);
+        if (output_buffer.data) free(output_buffer.data);
+    };
+//    //获取原生图片数据
+    vImage_Error a_ret = vImageBuffer_InitWithCGImage(&a_buffer, &vImageFormatARGB8888, NULL, imageRef, kvImageNoFlags);
+    //是否出错
+    if (a_ret != kvImageNoError) return NULL;
+    //对输出添加三大属性和开辟内存空间
+    output_buffer.width = MAX(size.width, 0);
+    output_buffer.height = MAX(size.height, 0);
+    output_buffer.rowBytes = vImageByteAlign(output_buffer.width * 4, 64);
+    output_buffer.data = malloc(output_buffer.rowBytes * output_buffer.height);
+    //判断是否为空
+    if (!output_buffer.data) return NULL;
+    //进行缩放，得到数据
+    vImage_Error ret = vImageScale_ARGB8888(&a_buffer, &output_buffer, NULL, kvImageHighQualityResampling);
+    CGImageRef outputImage = vImageCreateCGImageFromBuffer(&output_buffer, &vImageFormatARGB8888, NULL, NULL, kvImageNoFlags, &ret);
+    if (ret != kvImageNoError) return NULL;
+
+    return outputImage;
+    
+
+}
+
++ (CGImageRef)shearWithimage:(CGImageRef)imagRef rect:(CGRect)rect {
+    //设置容器
+    __block vImage_Buffer a_buffer = {}, output_buffer = {};
+    @onExit {
+        if (a_buffer.data) free(a_buffer.data);
+        if (output_buffer.data) free(output_buffer.data);
+    };
+    //获取原图
+    vImage_Error a_ret = vImageBuffer_InitWithCGImage(&a_buffer, &vImageFormatARGB8888, NULL, imagRef, kvImageNoFlags);
+    if (a_ret != kvImageNoError) return NULL;
+    //对输出图片进行属性添加
+    output_buffer.width = MAX(CGRectGetWidth(rect), 0);
+    output_buffer.height = MAX(CGRectGetHeight(rect), 0);
+    output_buffer.rowBytes = vImageByteAlign(output_buffer.width * 4, 64);
+    output_buffer.data = malloc(output_buffer.rowBytes * output_buffer.height);
+    if (!output_buffer.data) return NULL;
+
+    //使用平移来处理，x轴和y轴分别平移负向的minX,minY即可
+    CGFloat tx = CGRectGetMinX(rect);
+    CGFloat ty = CGRectGetMidY(rect);
+    CGAffineTransform transform = CGAffineTransformMakeTranslation(-tx, -ty);
+    vImage_CGAffineTransform cg_transform = *((vImage_CGAffineTransform *)&transform);
+    Pixel_8888 clear_color = {0};
+    vImage_Error ret = vImageAffineWarpCG_ARGB8888(&a_buffer, &output_buffer, NULL, &cg_transform, clear_color, kvImageBackgroundColorFill);
+    
+    CGImageRef outputImage = vImageCreateCGImageFromBuffer(&output_buffer, &vImageFormatARGB8888, NULL, NULL, kvImageNoFlags, &ret);
+    if (ret != kvImageNoError) return NULL;
+    
+    return outputImage;
+}
+
++ (CGImageRef)mirrorWithImage:(CGImageRef)imageRef state:(BOOL)state {
+    __block vImage_Buffer a_buffer = {}, output_buffer = {};
+    @onExit{
+        if (a_buffer.data) free(a_buffer.data);
+        if (output_buffer.data) free(output_buffer.data);
+    };
+    //获取原图
+    vImage_Error a_ret = vImageBuffer_InitWithCGImage(&a_buffer, &vImageFormatARGB8888, NULL, imageRef, kvImageNoFlags);
+    if (a_ret != kvImageNoError) return NULL;
+    //对输出设置属性
+    output_buffer.width = a_buffer.width;
+    output_buffer.height = a_buffer.height;
+    output_buffer.rowBytes = vImageByteAlign(output_buffer.width * 4, 64);
+    output_buffer.data = malloc(output_buffer.rowBytes * output_buffer.height);
+    if (!output_buffer.data) return NULL;
+    // 省略
+    vImage_Error ret;
+    if (state) {
+        // 水平镜像(左右)
+        ret = vImageHorizontalReflect_ARGB8888(&a_buffer, &output_buffer, kvImageHighQualityResampling);
+    } else {
+        // 垂直镜像(上下)
+        ret = vImageVerticalReflect_ARGB8888(&a_buffer, &output_buffer, kvImageHighQualityResampling);
+    }
+    CGImageRef outputImage = vImageCreateCGImageFromBuffer(&output_buffer, &vImageFormatARGB8888, NULL, NULL, kvImageNoFlags, &ret);
+    if (ret != kvImageNoError) return NULL;
+    
+    return outputImage;
+}
+
++ (CGImageRef)rotatingWithImage:(CGImageRef)imageRef radians:(CGFloat)radians {
+    __block vImage_Buffer a_buffer = {}, output_buffer = {};
+    @onExit{
+        if (a_buffer.data) free(a_buffer.data);
+        if (output_buffer.data) free(output_buffer.data);
+    };
+    //获取原图
+    vImage_Error a_ret = vImageBuffer_InitWithCGImage(&a_buffer, &vImageFormatARGB8888, NULL, imageRef, kvImageNoFlags);
+    if (a_ret != kvImageNoError) return NULL;
+    
+    CGSize size = CGSizeMake(a_buffer.width, a_buffer.height);
+    // 这里直接借用CG的方法来计算旋转后的大小，方便
+    CGAffineTransform transform = CGAffineTransformMakeRotation(radians);
+    size = CGSizeApplyAffineTransform(size, transform);    output_buffer.width = ABS(size.width);
+    output_buffer.height = ABS(size.height);
+    output_buffer.rowBytes = vImageByteAlign(output_buffer.width * 4, 64);
+    output_buffer.data = malloc(output_buffer.rowBytes * output_buffer.height);
+    if (!output_buffer.data) return NULL;
+    Pixel_8888 clear_color = {0};
+    // 旋转操作，多余部分填充Clear Color
+    vImage_Error ret = vImageRotate_ARGB8888(&a_buffer, &output_buffer, NULL, radians, clear_color, kvImageBackgroundColorFill | kvImageHighQualityResampling);
+    
+    CGImageRef outputImage = vImageCreateCGImageFromBuffer(&output_buffer, &vImageFormatARGB8888, NULL, NULL, kvImageNoFlags, &ret);
+    if (ret != kvImageNoError) return NULL;
+    
+    return outputImage;
+}
+/*
+ 这个方法是用来执行错切
+ CGVector offset; // 定位点偏移量
+ CGFloat translation; // 水平平移量
+ CGFloat slope; // 旋转弧度
+ CGFloat scale; // 对应错切的m值
+ */
++ (CGImageRef)shear1WithImage:(CGImageRef)imageRef offset:(CGVector)offset translation:(CGFloat)translation slope:(CGFloat)slope scale:(CGFloat)scale horizontal:(BOOL)horizontal{
+    __block vImage_Buffer a_buffer = {}, output_buffer = {};
+    @onExit{
+        if (a_buffer.data) free(a_buffer.data);
+        if (output_buffer.data) free(output_buffer.data);
+    };
+    //获取原始图
+    vImage_Error a_ret = vImageBuffer_InitWithCGImage(&a_buffer, &vImageFormatARGB8888, NULL, imageRef, kvImageNoFlags);
+    if (a_ret != kvImageNoError) return NULL;
+    
+    output_buffer.width = MAX(a_buffer.width - offset.dx, 0); //这里需要同时减去水平定位点的偏移
+    output_buffer.height = MAX(a_buffer.height - offset.dy, 0); // 同理
+    output_buffer.rowBytes = vImageByteAlign(output_buffer.width * 4, 64);
+    output_buffer.data = malloc(output_buffer.rowBytes * output_buffer.height);
+    if (!output_buffer.data) return NULL;
+    
+    Pixel_8888 clear_color = {0};
+    // 这里示例就用默认的重采样方法
+    ResamplingFilter resampling_filter = vImageNewResamplingFilter(scale, kvImageHighQualityResampling);
+    vImage_Error ret;
+    if (horizontal) {
+        // 水平错切
+        ret = vImageHorizontalShear_ARGB8888(&a_buffer, &output_buffer, offset.dx, offset.dy, translation, slope, resampling_filter, clear_color, kvImageBackgroundColorFill);
+    } else {
+        // 垂直错切
+        ret = vImageVerticalShear_ARGB8888(&a_buffer, &output_buffer, offset.dx, offset.dy, translation, slope, resampling_filter, clear_color, kvImageBackgroundColorFill);
+    }
+    vImageDestroyResamplingFilter(resampling_filter);
+    
+    CGImageRef outputImage = vImageCreateCGImageFromBuffer(&output_buffer, &vImageFormatARGB8888, NULL, NULL, kvImageNoFlags, &ret);
+    if (ret != kvImageNoError) return NULL;
+    
+    return outputImage;
+}
+
 // 为了方便，我们首先直接定义好ARGB8888的format结构体，后续需要多次使用
 static vImage_CGImageFormat vImageFormatARGB8888 = (vImage_CGImageFormat) {
     .bitsPerComponent = 8, // 8位
