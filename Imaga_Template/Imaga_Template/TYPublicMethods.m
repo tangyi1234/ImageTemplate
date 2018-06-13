@@ -13,4 +13,11 @@
     NSString *filePath=[[NSBundle mainBundle] pathForResource:str ofType:@"png"];
     return [UIImage imageNamed:filePath];
 }
+
++ (NSData *)addWithFilePathDataStr:(NSString *)str {
+    NSString *resource = [[NSBundle mainBundle] pathForResource:str ofType:@"png"];
+    
+    NSData *data = [NSData dataWithContentsOfFile:resource options:0 error:nil];
+    return data;
+}
 @end

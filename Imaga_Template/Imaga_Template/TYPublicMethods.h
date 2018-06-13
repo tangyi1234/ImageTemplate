@@ -11,4 +11,5 @@
 
 @interface TYPublicMethods : NSObject
 + (UIImage *)addWithFilePathStr:(NSString *)str;
++ (NSData *)addWithFilePathDataStr:(NSString *)str;
 @end
