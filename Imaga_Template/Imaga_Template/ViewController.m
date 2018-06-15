@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "TYImageProcessingViewController.h"
 #import "TYCodecViewController.h"
+#import "TYCodec1ViewController.h"
 
 @interface ViewController ()
 
@@ -36,6 +37,13 @@
     [but1 setTitle:@"编解码" forState:UIControlStateNormal];
     [but1 addTarget:self action:@selector(selectorBut1) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:but1];
+    
+    UIButton *but2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    but2.frame = CGRectMake(10, 180, 100, 30);
+    but2.backgroundColor = [UIColor greenColor];
+    [but2 setTitle:@"yuv实验" forState:UIControlStateNormal];
+    [but2 addTarget:self action:@selector(selectorBut2) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:but2];
 }
 
 - (void)selectorBut {
@@ -45,6 +53,11 @@
 
 - (void)selectorBut1 {
     TYCodecViewController *vc = [[TYCodecViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)selectorBut2 {
+    TYCodec1ViewController *vc = [[TYCodec1ViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

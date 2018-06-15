@@ -13,6 +13,7 @@
 		89987CB420C0318C004D67A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89987CB320C0318C004D67A5 /* Assets.xcassets */; };
 		89987CB720C0318C004D67A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89987CB520C0318C004D67A5 /* LaunchScreen.storyboard */; };
 		89987CBA20C0318C004D67A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89987CB920C0318C004D67A5 /* main.m */; };
+		A28E19AD20D369B800B44514 /* TYCodec1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A28E19AC20D369B800B44514 /* TYCodec1ViewController.m */; };
 		A2A982FE20CA85CB00C8413F /* EXTADT.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982E720CA85CB00C8413F /* EXTADT.m */; };
 		A2A982FF20CA85CB00C8413F /* EXTConcreteProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982E920CA85CB00C8413F /* EXTConcreteProtocol.m */; };
 		A2A9830020CA85CB00C8413F /* EXTNil.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A982ED20CA85CB00C8413F /* EXTNil.m */; };
@@ -58,6 +59,8 @@
 		89987CB620C0318C004D67A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89987CB820C0318C004D67A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89987CB920C0318C004D67A5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A28E19AB20D369B800B44514 /* TYCodec1ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TYCodec1ViewController.h; sourceTree = "<group>"; };
+		A28E19AC20D369B800B44514 /* TYCodec1ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TYCodec1ViewController.m; sourceTree = "<group>"; };
 		A2A982E620CA85CB00C8413F /* EXTADT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTADT.h; sourceTree = "<group>"; };
 		A2A982E720CA85CB00C8413F /* EXTADT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTADT.m; sourceTree = "<group>"; };
 		A2A982E820CA85CB00C8413F /* EXTConcreteProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTConcreteProtocol.h; sourceTree = "<group>"; };
@@ -170,6 +173,8 @@
 				A2A9830820CA862100C8413F /* TYImageProcessingViewController.m */,
 				A2B9EE0320D0B55500B60076 /* TYCodecViewController.h */,
 				A2B9EE0420D0B55500B60076 /* TYCodecViewController.m */,
+				A28E19AB20D369B800B44514 /* TYCodec1ViewController.h */,
+				A28E19AC20D369B800B44514 /* TYCodec1ViewController.m */,
 				A2A9830E20CA8B2200C8413F /* TYPublicMethods.h */,
 				A2A9830F20CA8B2200C8413F /* TYPublicMethods.m */,
 				A2A9831120CA8F0200C8413F /* TYImageProcessing.h */,
@@ -343,6 +348,7 @@
 			files = (
 				A2B9EE3820D0FE1F00B60076 /* AFURLRequestSerialization.m in Sources */,
 				A2A9830620CA85CB00C8413F /* NSMethodSignature+EXT.m in Sources */,
+				A28E19AD20D369B800B44514 /* TYCodec1ViewController.m in Sources */,
 				A2A9830320CA85CB00C8413F /* EXTScope.m in Sources */,
 				A2A9831020CA8B2200C8413F /* TYPublicMethods.m in Sources */,
 				89987CAC20C0318C004D67A5 /* ViewController.m in Sources */,
@@ -501,6 +507,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N5WRHCE748;
 				INFOPLIST_FILE = Imaga_Template/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -515,6 +522,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = N5WRHCE748;
 				INFOPLIST_FILE = Imaga_Template/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

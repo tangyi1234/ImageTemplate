@@ -16,9 +16,18 @@
 #endif
 typedef void (^imageRefBlock) (CGImageRef imageRef,NSUInteger ws,NSUInteger hs);
 typedef void (^imageRefNSMArrBlock) (NSMutableArray *muArr);
+typedef void (^imageRefProgressiveBlock) (CGImageRef imageRef);
+typedef void (^imageRefBlackWhiteImageBlock) (CGImageRef imageRef);
+typedef void (^imageRefYUVBlock) (CGImageRef imageRef);
 @interface TYImageCodec : NSObject
 //解码
 + (void)decodingWithImageData:(NSData *)data imageReturn:(imageRefBlock)imageReturn;
 + (void)addWithMoreDynamicFigureData:(NSData *)data imageReturn:(imageRefNSMArrBlock)imageReturn;
+//渐进
++ (void)addWithProgressiveDecodingData:(NSData *)data imageRefProgressive:(imageRefProgressiveBlock)imageRefProgressive;
+//转换为黑白色
++ (void)addWithBlackWhiteImageData:(NSData *)data type:(int)type blackWhiteImage:(imageRefBlackWhiteImageBlock)blackWhiteImage;
+//转yuv
++ (void)addWithConversionYUV:(NSData *)data imageRefYUV:(imageRefYUVBlock)imageRefYUV;
 + (UIImage *)sd_animatedGIFWithData:(NSData *)data;
 @end

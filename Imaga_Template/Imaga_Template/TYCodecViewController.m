@@ -65,6 +65,20 @@
     [but2 addTarget:self action:@selector(selectorBut2) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:but2];
     
+    UIButton *but3 = [UIButton buttonWithType:UIButtonTypeCustom];
+    but3.frame = CGRectMake(120, 30, 100, 30);
+    but3.backgroundColor = [UIColor greenColor];
+    [but3 setTitle:@"渐近式解码" forState:UIControlStateNormal];
+    [but3 addTarget:self action:@selector(selectorBut3) forControlEvents:UIControlEventTouchUpInside];
+    [scrollView addSubview:but3];
+    
+    UIButton *but4 = [UIButton buttonWithType:UIButtonTypeCustom];
+    but4.frame = CGRectMake(w - 110, 30, 100, 30);
+    but4.backgroundColor = [UIColor greenColor];
+    [but4 setTitle:@"转黑白色" forState:UIControlStateNormal];
+    [but4 addTarget:self action:@selector(selectorBut4) forControlEvents:UIControlEventTouchUpInside];
+    [scrollView addSubview:but4];
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 60, w, 300)];
     imageView.backgroundColor = [UIColor redColor];
     [scrollView addSubview:_imageView = imageView];
@@ -112,12 +126,47 @@
     [operationQueue addOperation:op];
 }
 
+- (void)selectorBut3 {
+    NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
+    NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(downloadImageBut3) object:nil];
+    [operationQueue addOperation:op];
+}
+
+- (void)selectorBut4 {
+    NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
+    NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(downloadImageBut4) object:nil];
+    [operationQueue addOperation:op];
+}
+
 - (void)downloadImages {
     NSURL *imageURL = [NSURL URLWithString:@"http://10.10.61.218:8080/name/movement.gif"];
     NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
     [TYImageCodec addWithMoreDynamicFigureData:imageData imageReturn:^(NSMutableArray *muArr) {
         NSLog(@"没有数据吗:%lu",(unsigned long)muArr.count);
         [self performSelectorOnMainThread:@selector(updateUIs:) withObject:muArr waitUntilDone:YES];
+    }];
+}
+
+- (void)downloadImageBut3 {
+    NSURL *imageURL = [NSURL URLWithString:@"http://10.10.61.218:8080/name/18.png"];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+    [TYImageCodec addWithProgressiveDecodingData:imageData imageRefProgressive:^(CGImageRef imageRef) {
+        UIImage *image = [UIImage imageWithCGImage:imageRef];
+        [self performSelectorOnMainThread:@selector(updateUIBut3:) withObject:image waitUntilDone:YES];
+    }];
+//
+//    [TYImageCodec addWithProgressiveDecodingData:imageData imageRefProgressive:^(NSData *imageData) {
+//        UIImage *image = [UIImage imageWithData:imageData];
+//        [self performSelectorOnMainThread:@selector(updateUIBut3:) withObject:image waitUntilDone:YES];
+//    }];
+}
+
+- (void)downloadImageBut4 {
+    NSURL *imageURL = [NSURL URLWithString:@"http://10.10.61.218:8080/name/18.png"];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+    [TYImageCodec addWithBlackWhiteImageData:imageData type:0 blackWhiteImage:^(CGImageRef imageRef) {
+        UIImage *image = [UIImage imageWithCGImage:imageRef];
+        [self performSelectorOnMainThread:@selector(updateUIBut4:) withObject:image waitUntilDone:YES];
     }];
 }
 
@@ -133,6 +182,14 @@
     _imageView.animationRepeatCount = 1;
     //开始播放动画
     [_imageView startAnimating];
+}
+
+- (void)updateUIBut3:(UIImage *)image {
+    _imageView.image = image;
+}
+
+- (void)updateUIBut4:(UIImage *)image {
+    _imageView.image = image;
 }
 
 #define mark --视频转码

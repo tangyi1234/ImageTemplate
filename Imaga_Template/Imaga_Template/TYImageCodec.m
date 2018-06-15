@@ -52,8 +52,6 @@
         double duration = [gifProperties[(NSString *)kCGImagePropertyGIFUnclampedDelayTime] doubleValue]; // GIF原始的帧持续时长，秒数
         CGImagePropertyOrientation exifOrientation = [frameProperties[(__bridge NSString *)kCGImagePropertyOrientation] integerValue]; // 方向
         CGImageRef imageRef = CGImageSourceCreateImageAtIndex(source, i, NULL); // CGImage
-//        UIImageOrientation imageOrientation = [self imageOrientationFromExifOrientation:exifOrientation];
-//        UIImage *image = [[UIImage imageWithCGImage:imageRef scale:[UIScreen mainScreen].scale orientation:imageOrientation];
         UIImage *image = [UIImage imageWithCGImage:imageRef];
         totalDuration += duration;
         [images addObject:image];
@@ -66,6 +64,285 @@
     }
     
     CFRelease(source);
+}
+
++ (void)addWithProgressiveDecodingData:(NSData *)data imageRefProgressive:(imageRefProgressiveBlock)imageRefProgressive {
+    if (!data) {
+        return;
+    }
+    //获取source
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+    //解码
+    // 更新数据
+//    CGImageSourceUpdateData(source, (__bridge CFDataRef)data, NO);
+    
+    // 和普通解码过程一样
+    CGImageRef imageRef = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+    
+    if (!imageRef) {
+        return;
+    }
+    
+//    CGDataProviderRef providerRef = CGImageGetDataProvider(imageRef);
+//    
+//    CFDataRef dataRef = CGDataProviderCopyData(providerRef);
+//    
+//    NSData *my_nsdata = (__bridge_transfer NSData*)dataRef;
+    
+    if (imageRefProgressive) {
+        imageRefProgressive(imageRef);
+    }
+    
+    CGImageRelease(imageRef);
+    CFRelease(source);
+}
+
++ (void)addWithBlackWhiteImageData:(NSData *)data type:(int)type blackWhiteImage:(imageRefBlackWhiteImageBlock)blackWhiteImage {
+    if (!data) {
+        return;
+    }
+    //获取source
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+    
+    //解码
+    CGImageRef imageRef = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+    
+    //复制代码
+    //知识点CGImageRef
+    /*
+     sizt_t是定义的一个可移植性的单位，在64位机器中为8字节，32位位4字节。
+     width：图片宽度像素
+     height：图片高度像素
+     bitsPerComponent：每个颜色的比特数，例如在rgba-32模式下为8
+     bitsPerPixel：每个像素的总比特数
+     bytesPerRow：每一行占用的字节数，注意这里的单位是字节
+     space：颜色空间模式，例如const CFStringRef kCGColorSpaceGenericRGB 这个函数可以返回一个颜色空间对象。
+     bitmapInfo：位图像素布局，这是个枚举
+     provider：数据源提供者
+     decode[]：解码渲染数组
+     shouldInterpolate：是否抗锯齿
+     intent：图片相关参数
+     */
+    size_t width  = CGImageGetWidth(imageRef);
+    size_t height = CGImageGetHeight(imageRef);
+    
+    size_t bitsPerComponent = CGImageGetBitsPerComponent(imageRef);
+    size_t bitsPerPixel = CGImageGetBitsPerPixel(imageRef);
+    
+    size_t bytesPerRow = CGImageGetBytesPerRow(imageRef);
+    
+    CGColorSpaceRef colorSpace = CGImageGetColorSpace(imageRef);
+    
+    CGBitmapInfo bitmapInfo = CGImageGetBitmapInfo(imageRef);
+    
+    
+    bool shouldInterpolate = CGImageGetShouldInterpolate(imageRef);
+    
+    CGColorRenderingIntent intent = CGImageGetRenderingIntent(imageRef);
+    
+    CGDataProviderRef dataProvider = CGImageGetDataProvider(imageRef);
+    
+    CFDataRef dataRef = CGDataProviderCopyData(dataProvider);
+    
+    UInt8 *buffer = (UInt8*)CFDataGetBytePtr(dataRef);
+    
+    NSUInteger  x, y;
+    for (y = 0; y < height; y++) {
+        for (x = 0; x < width; x++) {
+            UInt8 *tmp;
+            //将其转换为RGB格式
+            tmp = buffer + y * bytesPerRow + x * 4;
+            
+            UInt8 red,green,blue;
+            red = *(tmp + 0);
+            green = *(tmp + 1);
+            blue = *(tmp + 2);
+            
+            UInt8 brightness;
+            switch (type) {
+                case 1:
+                    brightness = (77 * red + 28 * green + 151 * blue) / 256;
+                    *(tmp + 0) = brightness;
+                    *(tmp + 1) = brightness;
+                    *(tmp + 2) = brightness;
+                    break;
+                case 2:
+                    *(tmp + 0) = red;
+                    *(tmp + 1) = green * 0.7;
+                    *(tmp + 2) = blue * 0.4;
+                    break;
+                case 3:
+                    *(tmp + 0) = 255 - red;
+                    *(tmp + 1) = 255 - green;
+                    *(tmp + 2) = 255 - blue;
+                    break;
+                case 4:
+                    *(tmp + 0) = red;
+                    *(tmp + 1) = 255 - green;
+                    *(tmp + 2) = 255 - blue;
+                    break;
+                default:
+                    *(tmp + 0) = red;
+                    *(tmp + 1) = green;
+                    *(tmp + 2) = blue;
+                    break;
+            }
+        }
+    }
+    
+    
+    CFDataRef effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(dataRef));
+    
+    CGDataProviderRef effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
+    
+    CGImageRef effectedCgImage = CGImageCreate(
+                                               width, height,
+                                               bitsPerComponent, bitsPerPixel, bytesPerRow,
+                                               colorSpace, bitmapInfo, effectedDataProvider,
+                                               NULL, shouldInterpolate, intent);
+    
+    if (!effectedCgImage) {
+        return;
+    }
+    
+    if (blackWhiteImage) {
+        blackWhiteImage(effectedCgImage);
+    }
+    
+    CGImageRelease(effectedCgImage);
+    
+    CFRelease(effectedDataProvider);
+    
+    CFRelease(effectedData);
+    
+    CFRelease(dataRef);
+}
+
++ (void)addWithConversionYUV:(NSData *)data imageRefYUV:(imageRefYUVBlock)imageRefYUV{
+    if (!data) {
+        return;
+    }
+    //获取source
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
+    
+    //解码
+    CGImageRef imageRef = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+    
+    //复制代码
+    //知识点CGImageRef
+    /*
+     sizt_t是定义的一个可移植性的单位，在64位机器中为8字节，32位位4字节。
+     width：图片宽度像素
+     height：图片高度像素
+     bitsPerComponent：每个颜色的比特数，例如在rgba-32模式下为8
+     bitsPerPixel：每个像素的总比特数
+     bytesPerRow：每一行占用的字节数，注意这里的单位是字节
+     space：颜色空间模式，例如const CFStringRef kCGColorSpaceGenericRGB 这个函数可以返回一个颜色空间对象。
+     bitmapInfo：位图像素布局，这是个枚举
+     provider：数据源提供者
+     decode[]：解码渲染数组
+     shouldInterpolate：是否抗锯齿
+     intent：图片相关参数
+     */
+    size_t width  = CGImageGetWidth(imageRef);
+    size_t height = CGImageGetHeight(imageRef);
+    
+    size_t bitsPerComponent = CGImageGetBitsPerComponent(imageRef);
+    size_t bitsPerPixel = CGImageGetBitsPerPixel(imageRef);
+    
+    size_t bytesPerRow = CGImageGetBytesPerRow(imageRef);
+    
+    CGColorSpaceRef colorSpace = CGImageGetColorSpace(imageRef);
+    
+    CGBitmapInfo bitmapInfo = CGImageGetBitmapInfo(imageRef);
+    
+    
+    bool shouldInterpolate = CGImageGetShouldInterpolate(imageRef);
+    
+    CGColorRenderingIntent intent = CGImageGetRenderingIntent(imageRef);
+    
+    CGDataProviderRef dataProvider = CGImageGetDataProvider(imageRef);
+    
+    CFDataRef dataRef = CGDataProviderCopyData(dataProvider);
+    
+    UInt8 *buffer = (UInt8*)CFDataGetBytePtr(dataRef);
+    
+    NSUInteger  x, y;
+    for (y = 0; y < height; y++) {
+        for (x = 0; x < width; x++) {
+            UInt8 *tmp;
+            //将其转换为RGB格式
+            tmp = buffer + y * bytesPerRow + x * 4;
+            
+            UInt8 red,green,blue;
+            red = *(tmp + 0);
+            green = *(tmp + 1);
+            blue = *(tmp + 2);
+            
+//            //y
+//            *(tmp + 0) = 0.299*red + 0.587*green + 0.115*blue;
+//            //u
+//            *(tmp + 1) = -0.1687*red - 0.3313*green +0.5*blue + 128;
+//            //v
+//            *(tmp + 2) = 0.5*red - 0.4187*green - 0.0813*blue + 128;
+            UInt8 brightness;
+//            switch (type) {
+//                case 1:
+                    brightness = (77 * red + 28 * green + 151 * blue) / 256;
+                    *(tmp + 0) = brightness;
+                    *(tmp + 1) = brightness;
+                    *(tmp + 2) = brightness;
+//                    break;
+//                case 2:
+//                    *(tmp + 0) = red;
+//                    *(tmp + 1) = green * 0.7;
+//                    *(tmp + 2) = blue * 0.4;
+//                    break;
+//                case 3:
+//                    *(tmp + 0) = 255 - red;
+//                    *(tmp + 1) = 255 - green;
+//                    *(tmp + 2) = 255 - blue;
+//                    break;
+//                case 4:
+//                    *(tmp + 0) = red;
+//                    *(tmp + 1) = 255 - green;
+//                    *(tmp + 2) = 255 - blue;
+//                    break;
+//                default:
+//                    *(tmp + 0) = red;
+//                    *(tmp + 1) = green;
+//                    *(tmp + 2) = blue;
+//                    break;
+//            }
+        }
+    }
+    
+    
+    CFDataRef effectedData = CFDataCreate(NULL, buffer, CFDataGetLength(dataRef));
+    
+    CGDataProviderRef effectedDataProvider = CGDataProviderCreateWithCFData(effectedData);
+    
+    CGImageRef effectedCgImage = CGImageCreate(
+                                               width, height,
+                                               bitsPerComponent, bitsPerPixel, bytesPerRow,
+                                               colorSpace, bitmapInfo, effectedDataProvider,
+                                               NULL, shouldInterpolate, intent);
+    
+    if (!effectedCgImage) {
+        return;
+    }
+    
+    if (imageRefYUV) {
+        imageRefYUV(effectedCgImage);
+    }
+    
+    CGImageRelease(effectedCgImage);
+    
+    CFRelease(effectedDataProvider);
+    
+    CFRelease(effectedData);
+    
+    CFRelease(dataRef);
 }
 
 + (UIImage *)sd_animatedGIFWithData:(NSData *)data {
