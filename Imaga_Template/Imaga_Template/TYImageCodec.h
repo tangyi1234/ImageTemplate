@@ -28,6 +28,6 @@ typedef void (^imageRefYUVBlock) (CGImageRef imageRef);
 //转换为黑白色
 + (void)addWithBlackWhiteImageData:(NSData *)data type:(int)type blackWhiteImage:(imageRefBlackWhiteImageBlock)blackWhiteImage;
 //转yuv
-+ (void)addWithConversionYUV:(NSData *)data imageRefYUV:(imageRefYUVBlock)imageRefYUV;
++ (void)addWithConversionYUV:(NSData *)data type:(NSUInteger)type imageRefYUV:(imageRefYUVBlock)imageRefYUV;
 + (UIImage *)sd_animatedGIFWithData:(NSData *)data;
 @end

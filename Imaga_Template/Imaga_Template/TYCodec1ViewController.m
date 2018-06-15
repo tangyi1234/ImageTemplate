@@ -11,9 +11,10 @@
 
 #define w [UIScreen mainScreen].bounds.size.width
 #define h [UIScreen mainScreen].bounds.size.height
-@interface TYCodec1ViewController ()<UIScrollViewDelegate>
+@interface TYCodec1ViewController ()<UIScrollViewDelegate, UITextFieldDelegate>
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, weak) UIImageView *imageView;
+@property (nonatomic, weak) UITextField *textField;
 @end
 
 @implementation TYCodec1ViewController
@@ -40,6 +41,11 @@
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, h - 400, w, 400)];
     imageView.backgroundColor = [UIColor redColor];
     [_scrollView addSubview:_imageView = imageView];
+    
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(w - 200, 0, 180, 40)];
+    textField.delegate = self;
+    textField.text = @"1";
+    [_scrollView addSubview:_textField = textField];
 }
 
 - (void)selectorBut1 {
@@ -51,7 +57,7 @@
 - (void)downloadImageBut1 {
     NSURL *imageURL = [NSURL URLWithString:@"http://10.10.61.218:8080/name/8.png"];
     NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-    [TYImageCodec addWithConversionYUV:imageData imageRefYUV:^(CGImageRef imageRef) {
+    [TYImageCodec addWithConversionYUV:imageData type:[_textField.text integerValue] imageRefYUV:^(CGImageRef imageRef) {
         UIImage *image = [UIImage imageWithCGImage:imageRef];
         [self performSelectorOnMainThread:@selector(updateUIBut1:) withObject:image waitUntilDone:YES];
     }];
@@ -59,10 +65,34 @@
 
 - (void)updateUIBut1:(UIImage *)image {
     _imageView.image = image;
-    NSData * imageData = UIImageJPEGRepresentation(image,1);
+    [self calulateImageFileSize:image];
+}
+
+- (void)calulateImageFileSize:(UIImage *)image {
+    NSData *data = UIImagePNGRepresentation(image);
+    if (!data) {
+        data = UIImageJPEGRepresentation(image, 1.0);//需要改成0.5才接近原图片大小，原因请看下文
+    }
+    double dataLength = [data length] * 1.0;
+    NSArray *typeArray = @[@"bytes",@"KB",@"MB",@"GB",@"TB",@"PB", @"EB",@"ZB",@"YB"];
+    NSInteger index = 0;
+    while (dataLength > 1024) {
+        dataLength /= 1024.0;
+        index ++;
+    }
+    NSLog(@"image = %.3f %@",dataLength,typeArray[index]);
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     
-    NSUInteger length = [imageData length]/1000;
-    NSLog(@"图片大小:%lu",(unsigned long)length);
+    [_textField resignFirstResponder]; // 空白处收起
+    
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    [_textField resignFirstResponder];
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {

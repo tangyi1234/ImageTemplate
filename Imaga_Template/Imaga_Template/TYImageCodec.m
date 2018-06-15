@@ -218,7 +218,7 @@
     CFRelease(dataRef);
 }
 
-+ (void)addWithConversionYUV:(NSData *)data imageRefYUV:(imageRefYUVBlock)imageRefYUV{
++ (void)addWithConversionYUV:(NSData *)data type:(NSUInteger)type imageRefYUV:(imageRefYUVBlock)imageRefYUV{
     if (!data) {
         return;
     }
@@ -286,34 +286,48 @@
 //            //v
 //            *(tmp + 2) = 0.5*red - 0.4187*green - 0.0813*blue + 128;
             UInt8 brightness;
-//            switch (type) {
-//                case 1:
+            double f_y, f_u, f_v;
+            uint8_t y, u, v;
+            switch (type) {
+                case 1:
                     brightness = (77 * red + 28 * green + 151 * blue) / 256;
                     *(tmp + 0) = brightness;
                     *(tmp + 1) = brightness;
                     *(tmp + 2) = brightness;
-//                    break;
-//                case 2:
-//                    *(tmp + 0) = red;
-//                    *(tmp + 1) = green * 0.7;
-//                    *(tmp + 2) = blue * 0.4;
-//                    break;
-//                case 3:
-//                    *(tmp + 0) = 255 - red;
-//                    *(tmp + 1) = 255 - green;
-//                    *(tmp + 2) = 255 - blue;
-//                    break;
-//                case 4:
-//                    *(tmp + 0) = red;
-//                    *(tmp + 1) = 255 - green;
-//                    *(tmp + 2) = 255 - blue;
-//                    break;
-//                default:
-//                    *(tmp + 0) = red;
-//                    *(tmp + 1) = green;
-//                    *(tmp + 2) = blue;
-//                    break;
-//            }
+                    break;
+                case 2:
+                    *(tmp + 0) = red;
+                    *(tmp + 1) = green * 0.7;
+                    *(tmp + 2) = blue * 0.4;
+                    break;
+                case 3:
+                    *(tmp + 0) = 255 - red;
+                    *(tmp + 1) = 255 - green;
+                    *(tmp + 2) = 255 - blue;
+                    break;
+                case 4:
+                    *(tmp + 0) = red;
+                    *(tmp + 1) = 255 - green;
+                    *(tmp + 2) = 255 - blue;
+                    break;
+                case 5:
+                    f_y = (float) ((66 * red + 129 * green + 25 * blue + 128) >> 8) + 16;
+                    f_u = (float) ((-38 * red - 74 * green + 112 * blue + 128) >> 8) + 128;
+                    f_v = (float) ((112 * red - 94 * green - 18 * blue + 128) >> 8) + 128;
+                    
+                    y = correct_color_value(f_y);
+                    u = correct_color_value(f_u);
+                    v = correct_color_value(f_v);
+                    *(tmp + 0) = y;
+                    *(tmp + 1) = u;
+                    *(tmp + 2) = v;
+                    break;
+                default:
+                    *(tmp + 0) = red;
+                    *(tmp + 1) = green;
+                    *(tmp + 2) = blue;
+                    break;
+            }
         }
     }
     
@@ -419,4 +433,17 @@
     CFRelease(cfFrameProperties);
     return frameDuration;
 }
+
+uint8_t correct_color_value(float color) {
+    uint8_t intValue;
+    if (color < 0) {
+        intValue = 0;
+    } else if (color > 255) {
+        intValue = 255;
+    } else {
+        intValue = (uint8_t)color;
+    }
+    return intValue;
+}
+
 @end
